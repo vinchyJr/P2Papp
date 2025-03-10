@@ -2,4 +2,4 @@
 #include "EWIEGA46WW/moc_createroom.cpp"
 #include "EWIEGA46WW/moc_joinroom.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
-#include "EWIEGA46WW/moc_p2pserver.cpp"
+#include "EWIEGA46WW/moc_peer.cpp"

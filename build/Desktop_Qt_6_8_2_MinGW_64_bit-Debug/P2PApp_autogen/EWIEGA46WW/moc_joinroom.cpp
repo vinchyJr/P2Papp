@@ -39,9 +39,10 @@ struct qt_meta_tag_ZN8JoinRoomE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN8JoinRoomE = QtMocHelpers::stringData(
     "JoinRoom",
-    "joinSelectedRoom",
+    "onConnected",
     "",
-    "filterRooms"
+    "onTextMessageReceived",
+    "message"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -62,11 +63,11 @@ Q_CONSTINIT static const uint qt_meta_data_ZN8JoinRoomE[] = {
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
        1,    0,   26,    2, 0x08,    1 /* Private */,
-       3,    0,   27,    2, 0x08,    2 /* Private */,
+       3,    1,   27,    2, 0x08,    2 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    4,
 
        0        // eod
 };
@@ -80,10 +81,11 @@ Q_CONSTINIT const QMetaObject JoinRoom::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN8JoinRoomE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<JoinRoom, std::true_type>,
-        // method 'joinSelectedRoom'
+        // method 'onConnected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'filterRooms'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        // method 'onTextMessageReceived'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
 } };
@@ -93,12 +95,11 @@ void JoinRoom::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     auto *_t = static_cast<JoinRoom *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->joinSelectedRoom(); break;
-        case 1: _t->filterRooms(); break;
+        case 0: _t->onConnected(); break;
+        case 1: _t->onTextMessageReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *JoinRoom::metaObject() const

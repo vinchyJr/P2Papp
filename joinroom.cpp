@@ -1,66 +1,43 @@
 #include "joinroom.h"
+#include <QVBoxLayout>
 #include <QMessageBox>
-#include <QFileInfo>
-#include <QUrl>
+#include <QDebug>
 
-JoinRoom::JoinRoom(QWidget *parent) : QWidget(parent) {
-    setAcceptDrops(true);
+JoinRoom::JoinRoom(QWidget *parent) : QWidget(parent), socket(new QWebSocket()) {
+    QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
-
-    QVBoxLayout *leftLayout = new QVBoxLayout();
-    searchInput = new QLineEdit(this);
-    searchInput->setPlaceholderText("Rechercher une salle...");
+    roomNameInput = new QLineEdit(this);
+    roomNameInput->setPlaceholderText("Entrez l'IP de l'hôte (ex: 192.168.1.10)");
 
     roomList = new QListWidget(this);
-    roomList->addItem("Salle 1");
-    roomList->addItem("Salle 2");
-    roomList->addItem("Salle 3");
+    joinButton = new QPushButton("Rejoindre", this);
 
-    leftLayout->addWidget(searchInput);
-    leftLayout->addWidget(roomList);
+    layout->addWidget(roomNameInput);
+    layout->addWidget(roomList);
+    layout->addWidget(joinButton);
+    layout->setAlignment(Qt::AlignCenter);
 
-    fileList = new QListWidget(this);
-
-    mainLayout->addLayout(leftLayout, 1);
-    mainLayout->addWidget(fileList, 2);
-
-    connect(searchInput, &QLineEdit::textChanged, this, &JoinRoom::filterRooms);
-    connect(roomList, &QListWidget::itemClicked, this, &JoinRoom::joinSelectedRoom);
+    connect(joinButton, &QPushButton::clicked, this, &JoinRoom::joinRoom);
+    connect(socket, &QWebSocket::connected, this, &JoinRoom::onConnected);
+    connect(socket, &QWebSocket::textMessageReceived, this, &JoinRoom::onTextMessageReceived);
 }
 
-void JoinRoom::joinSelectedRoom() {
-    QString selectedRoom = roomList->currentItem()->text();
-    QMessageBox::information(this, "Connexion", "Vous avez rejoint la salle : " + selectedRoom);
-
-    fileList->clear();
-    if (roomFiles.contains(selectedRoom)) {
-        for (const QString &file : roomFiles[selectedRoom]) {
-            fileList->addItem(file);
-        }
+void JoinRoom::joinRoom() {
+    QString hostIP = roomNameInput->text().trimmed();
+    if (hostIP.isEmpty()) {
+        QMessageBox::warning(this, "Erreur", "Veuillez entrer l'IP de l'hôte !");
+        return;
     }
+
+    QString wsUrl = QString("ws://%1:7777").arg(hostIP);
+    qDebug() << "🔗 Connexion directe à la salle P2P:" << wsUrl;
+    socket->open(QUrl(wsUrl));
 }
 
-void JoinRoom::filterRooms() {
-    for (int i = 0; i < roomList->count(); i++) {
-        QListWidgetItem *item = roomList->item(i);
-        item->setHidden(!item->text().contains(searchInput->text(), Qt::CaseInsensitive));
-    }
+void JoinRoom::onConnected() {
+    qDebug() << "🔗 Connexion WebSocket réussie !";
 }
 
-void JoinRoom::dragEnterEvent(QDragEnterEvent *event) {
-    if (event->mimeData()->hasUrls()) {
-        event->acceptProposedAction();
-    }
-}
-
-void JoinRoom::dropEvent(QDropEvent *event) {
-    QString selectedRoom = roomList->currentItem()->text();
-
-    for (const QUrl &url : event->mimeData()->urls()) {
-        QFileInfo fileInfo(url.toLocalFile());
-        roomFiles[selectedRoom].append(fileInfo.fileName());
-        fileList->addItem(fileInfo.fileName());
-    }
-    event->acceptProposedAction();
+void JoinRoom::onTextMessageReceived(QString message) {
+    qDebug() << "📩 Message reçu :" << message;
 }

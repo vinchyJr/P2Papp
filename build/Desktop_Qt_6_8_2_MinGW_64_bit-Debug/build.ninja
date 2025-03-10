@@ -89,9 +89,9 @@ build CMakeFiles/P2PApp.dir/joinroom.cpp.obj: CXX_COMPILER__P2PApp_unscanned_Deb
   OBJECT_DIR = CMakeFiles\P2PApp.dir
   OBJECT_FILE_DIR = CMakeFiles\P2PApp.dir
 
-build CMakeFiles/P2PApp.dir/p2pserver.cpp.obj: CXX_COMPILER__P2PApp_unscanned_Debug E$:/Ecole/C/P2Papp/p2pserver.cpp || cmake_object_order_depends_target_P2PApp
+build CMakeFiles/P2PApp.dir/peer.cpp.obj: CXX_COMPILER__P2PApp_unscanned_Debug E$:/Ecole/C/P2Papp/peer.cpp || cmake_object_order_depends_target_P2PApp
   DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WEBSOCKETS_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
-  DEP_FILE = CMakeFiles\P2PApp.dir\p2pserver.cpp.obj.d
+  DEP_FILE = CMakeFiles\P2PApp.dir\peer.cpp.obj.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -IE:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/include -isystem E:/qt/6.8.2/mingw_64/include/QtWidgets -isystem E:/qt/6.8.2/mingw_64/include -isystem E:/qt/6.8.2/mingw_64/include/QtCore -isystem E:/qt/6.8.2/mingw_64/mkspecs/win32-g++ -isystem E:/qt/6.8.2/mingw_64/include/QtGui -isystem E:/qt/6.8.2/mingw_64/include/QtWebSockets -isystem E:/qt/6.8.2/mingw_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles\P2PApp.dir
@@ -105,7 +105,7 @@ build CMakeFiles/P2PApp.dir/p2pserver.cpp.obj: CXX_COMPILER__P2PApp_unscanned_De
 #############################################
 # Link the executable P2PApp.exe
 
-build P2PApp.exe: CXX_EXECUTABLE_LINKER__P2PApp_Debug CMakeFiles/P2PApp.dir/P2PApp_autogen/mocs_compilation.cpp.obj CMakeFiles/P2PApp.dir/main.cpp.obj CMakeFiles/P2PApp.dir/mainwindow.cpp.obj CMakeFiles/P2PApp.dir/createroom.cpp.obj CMakeFiles/P2PApp.dir/joinroom.cpp.obj CMakeFiles/P2PApp.dir/p2pserver.cpp.obj | E$:/qt/6.8.2/mingw_64/lib/libQt6Widgets.a E$:/qt/6.8.2/mingw_64/lib/libQt6WebSockets.a E$:/qt/6.8.2/mingw_64/lib/libQt6Gui.a E$:/qt/6.8.2/mingw_64/lib/libQt6Network.a E$:/qt/6.8.2/mingw_64/lib/libQt6Core.a || P2PApp_autogen P2PApp_autogen_timestamp_deps
+build P2PApp.exe: CXX_EXECUTABLE_LINKER__P2PApp_Debug CMakeFiles/P2PApp.dir/P2PApp_autogen/mocs_compilation.cpp.obj CMakeFiles/P2PApp.dir/main.cpp.obj CMakeFiles/P2PApp.dir/mainwindow.cpp.obj CMakeFiles/P2PApp.dir/createroom.cpp.obj CMakeFiles/P2PApp.dir/joinroom.cpp.obj CMakeFiles/P2PApp.dir/peer.cpp.obj | E$:/qt/6.8.2/mingw_64/lib/libQt6Widgets.a E$:/qt/6.8.2/mingw_64/lib/libQt6WebSockets.a E$:/qt/6.8.2/mingw_64/lib/libQt6Gui.a E$:/qt/6.8.2/mingw_64/lib/libQt6Network.a E$:/qt/6.8.2/mingw_64/lib/libQt6Core.a || P2PApp_autogen P2PApp_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = E:/qt/6.8.2/mingw_64/lib/libQt6Widgets.a  E:/qt/6.8.2/mingw_64/lib/libQt6WebSockets.a  E:/qt/6.8.2/mingw_64/lib/libQt6Gui.a  -ld3d11  -ldxgi  -ldxguid  -ld3d12  E:/qt/6.8.2/mingw_64/lib/libQt6Network.a  E:/qt/6.8.2/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\P2PApp.dir

@@ -2,33 +2,26 @@
 #define JOINROOM_H
 
 #include <QWidget>
-#include <QListWidget>
+#include <QWebSocket>
 #include <QLineEdit>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QDropEvent>
-#include <QMimeData>
-#include <QMap>
+#include <QPushButton>
+#include <QListWidget>
 
 class JoinRoom : public QWidget {
     Q_OBJECT
-
 public:
-    explicit JoinRoom(QWidget *parent = nullptr);
-
-protected:
-    void dragEnterEvent(QDragEnterEvent *event) override;
-    void dropEvent(QDropEvent *event) override;
+    explicit JoinRoom(QWidget *parent = nullptr);  // 🔹 Vérifie que cette ligne est bien là !
+    void joinRoom();
 
 private slots:
-    void joinSelectedRoom();
-    void filterRooms();
+    void onConnected();
+    void onTextMessageReceived(QString message);
 
 private:
+    QWebSocket *socket;
+    QLineEdit *roomNameInput;
     QListWidget *roomList;
-    QLineEdit *searchInput;
-    QListWidget *fileList;
-    QMap<QString, QStringList> roomFiles; // Stocke les fichiers pour chaque salle
+    QPushButton *joinButton;
 };
 
 #endif // JOINROOM_H

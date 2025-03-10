@@ -1,10 +1,16 @@
 E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/EWIEGA46WW/moc_createroom.cpp: E:/Ecole/C/P2Papp/createroom.h \
   E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/moc_predefs.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/QFlags \
+  E:/qt/6.8.2/mingw_64/include/QtCore/QSharedDataPointer \
+  E:/qt/6.8.2/mingw_64/include/QtCore/QString \
+  E:/qt/6.8.2/mingw_64/include/QtCore/QUrl \
+  E:/qt/6.8.2/mingw_64/include/QtCore/QVariant \
   E:/qt/6.8.2/mingw_64/include/QtCore/q20functional.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/q20iterator.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/q20memory.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/q20type_traits.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/q23utility.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/q26numeric.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qalgorithms.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qanystringview.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qarraydata.h \
@@ -19,6 +25,7 @@ E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/EWIEG
   E:/qt/6.8.2/mingw_64/include/QtCore/qbytearrayalgorithms.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qbytearraylist.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qbytearrayview.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/qcalendar.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qchar.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qcompare.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qcompare_impl.h \
@@ -30,8 +37,10 @@ E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/EWIEG
   E:/qt/6.8.2/mingw_64/include/QtCore/qcontainerinfo.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qcontainertools_impl.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qcontiguouscache.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/qcryptographichash.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qdarwinhelpers.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qdatastream.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/qdatetime.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qdebug.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qendian.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qexceptionhandling.h \
@@ -45,12 +54,14 @@ E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/EWIEG
   E:/qt/6.8.2/mingw_64/include/QtCore/qglobalstatic.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qhash.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qhashfunctions.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/qiodevice.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qiodevicebase.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qiterable.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qiterator.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qlatin1stringview.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qline.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qlist.h \
+  E:/qt/6.8.2/mingw_64/include/QtCore/qlocale.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qlogging.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qmalloc.h \
   E:/qt/6.8.2/mingw_64/include/QtCore/qmap.h \
@@ -134,35 +145,43 @@ E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/EWIEG
   E:/qt/6.8.2/mingw_64/include/QtGui/qkeysequence.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qpaintdevice.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qpalette.h \
-  E:/qt/6.8.2/mingw_64/include/QtGui/qpen.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qpixelformat.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qpixmap.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qpolygon.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qregion.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qrgb.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qrgba64.h \
-  E:/qt/6.8.2/mingw_64/include/QtGui/qtextcursor.h \
-  E:/qt/6.8.2/mingw_64/include/QtGui/qtextdocument.h \
-  E:/qt/6.8.2/mingw_64/include/QtGui/qtextformat.h \
-  E:/qt/6.8.2/mingw_64/include/QtGui/qtextoption.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qtgui-config.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qtguiexports.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qtguiglobal.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qtransform.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qwindowdefs.h \
   E:/qt/6.8.2/mingw_64/include/QtGui/qwindowdefs_win.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/QLineEdit \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/QPushButton \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/QVBoxLayout \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/QAbstractSocket \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/QNetworkProxy \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/QNetworkRequest \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/QSslConfiguration \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/QSslError \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qabstractsocket.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qhostaddress.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qhttpheaders.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qnetworkproxy.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qnetworkrequest.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qssl.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qsslcertificate.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qsslconfiguration.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qsslerror.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qsslsocket.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qtcpsocket.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qtnetwork-config.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qtnetworkexports.h \
+  E:/qt/6.8.2/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+  E:/qt/6.8.2/mingw_64/include/QtWebSockets/QWebSocket \
+  E:/qt/6.8.2/mingw_64/include/QtWebSockets/qtwebsocketsexports.h \
+  E:/qt/6.8.2/mingw_64/include/QtWebSockets/qwebsocket.h \
+  E:/qt/6.8.2/mingw_64/include/QtWebSockets/qwebsocketprotocol.h \
+  E:/qt/6.8.2/mingw_64/include/QtWebSockets/qwebsockets_global.h \
   E:/qt/6.8.2/mingw_64/include/QtWidgets/QWidget \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qabstractbutton.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qboxlayout.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qframe.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qgridlayout.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qlayout.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qlayoutitem.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qlineedit.h \
-  E:/qt/6.8.2/mingw_64/include/QtWidgets/qpushbutton.h \
   E:/qt/6.8.2/mingw_64/include/QtWidgets/qsizepolicy.h \
   E:/qt/6.8.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
   E:/qt/6.8.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \

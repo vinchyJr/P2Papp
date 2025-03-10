@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(P2PApp VERSION 0.1 LANGUAGES CXX)
 
-# AutoMoc : Qt gère automatiquement les fichiers moc (Meta-Object Compiler)
+# AutoMoc : Qt gère automatiquement les fichiers MOC (Meta-Object Compiler)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
@@ -20,15 +20,14 @@ message(STATUS "Qt WebSockets found: ${Qt6WebSockets_FOUND}")
 
 # Fichiers sources
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        createroom.cpp
-        createroom.h
-        joinroom.cpp
-        joinroom.h
-        p2pserver.cpp
-        p2pserver.h
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    createroom.cpp
+    createroom.h
+    joinroom.cpp
+    joinroom.h
+    peer.cpp  # 🔹 Assure-toi que peer.cpp est là mais PAS peer.h
 )
 
 # Créer l'exécutable

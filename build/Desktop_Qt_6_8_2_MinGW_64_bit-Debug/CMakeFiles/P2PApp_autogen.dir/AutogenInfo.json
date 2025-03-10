@@ -355,12 +355,7 @@
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
 		],
-		[
-			"E:/Ecole/C/P2Papp/p2pserver.h",
-			"MU",
-			"EWIEGA46WW/moc_p2pserver.cpp",
-			null
-		]
+		[ "E:/Ecole/C/P2Papp/peer.h", "MU", "EWIEGA46WW/moc_peer.cpp", null ]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "E:/Ecole/C/P2Papp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/P2PApp_autogen/include",
@@ -440,7 +435,7 @@
 		[ "E:/Ecole/C/P2Papp/joinroom.cpp", "MU", null ],
 		[ "E:/Ecole/C/P2Papp/main.cpp", "MU", null ],
 		[ "E:/Ecole/C/P2Papp/mainwindow.cpp", "MU", null ],
-		[ "E:/Ecole/C/P2Papp/p2pserver.cpp", "MU", null ]
+		[ "E:/Ecole/C/P2Papp/peer.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
