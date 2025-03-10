@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
+#include <QFileDialog>
 
 Peer::Peer(quint16 port, QObject *parent)
     : QObject(parent), server(new QWebSocketServer("P2P Node", QWebSocketServer::NonSecureMode, this)) {
@@ -43,16 +44,34 @@ void Peer::onMessageReceived(QString message) {
 
 // ✅ Fonction qui gère la réception d'un fichier
 void Peer::onBinaryMessageReceived(QByteArray data) {
-    if (!file.isOpen()) {
-        file.setFileName("received_file.dat");  // 📥 Sauvegarde sous ce nom
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) {
-            qDebug() << "❌ Erreur : Impossible de créer le fichier reçu.";
+    static QFile receivedFile;
+
+    // 📌 Vérifie si c'est le début du transfert
+    if (!receivedFile.isOpen()) {
+        QString fileName = "received_file.dat";  // 🔹 Remplace par un vrai nom plus tard
+
+        // 🔹 Demande à l'utilisateur où enregistrer le fichier
+        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", fileName);
+        if (savePath.isEmpty()) {
+            qDebug() << "❌ Aucun emplacement choisi pour enregistrer le fichier.";
             return;
         }
+
+        receivedFile.setFileName(savePath);
+        if (!receivedFile.open(QIODevice::WriteOnly)) {
+            qDebug() << "❌ Erreur : Impossible d'ouvrir le fichier pour écriture.";
+            return;
+        }
+
+        qDebug() << "📥 Fichier en cours de réception : " << savePath;
     }
 
-    file.write(data);
-    qDebug() << "📥 Chunk de fichier reçu (" << data.size() << " octets)";
+    // 🔹 Écrit le bloc reçu dans le fichier
+    receivedFile.write(data);
+
+    qDebug() << "📥 Chunk reçu (" << data.size() << " octets)";
+
+    // 🔹 Ferme le fichier quand le transfert est terminé (ajoute une condition plus tard)
 }
 
 // ✅ Fonction qui envoie un fichier
