@@ -15,23 +15,7 @@ Peer::Peer(quint16 port, QObject *parent)
     }
 }
 
-void Peer::connectToPeer(const QString &ip, quint16 port) {
-    if (currentClient) {
-        qDebug() << "⚠ Déjà connecté à un pair.";
-        return;
-    }
-
-    currentClient = new QWebSocket();
-    connect(currentClient, &QWebSocket::connected, [=]() {
-        qDebug() << "🔗 Connecté à" << ip << ":" << port;
-    });
-    connect(currentClient, &QWebSocket::disconnected, this, &Peer::onPeerDisconnected);
-    connect(currentClient, &QWebSocket::binaryMessageReceived, this, &Peer::onBinaryMessageReceived);
-
-    qDebug() << "🔌 Connexion en cours vers" << ip << ":" << port;
-    currentClient->open(QUrl(QString("ws://%1:%2").arg(ip).arg(port)));
-}
-
+// ✅ Fonction qui gère la connexion d'un pair
 void Peer::onNewConnection() {
     QWebSocket *client = server->nextPendingConnection();
     if (!client) {
@@ -42,11 +26,12 @@ void Peer::onNewConnection() {
     connect(client, &QWebSocket::textMessageReceived, this, &Peer::onMessageReceived);
     connect(client, &QWebSocket::binaryMessageReceived, this, &Peer::onBinaryMessageReceived);
     connect(client, &QWebSocket::disconnected, this, &Peer::onPeerDisconnected);
-    clients.append(client);
 
+    clients.append(client);
     qDebug() << "🔗 Nouveau pair connecté ! Total clients:" << clients.size();
 }
 
+// ✅ Fonction qui gère les messages reçus
 void Peer::onMessageReceived(QString message) {
     qDebug() << "📩 Message P2P reçu :" << message;
 
@@ -56,45 +41,42 @@ void Peer::onMessageReceived(QString message) {
     }
 }
 
+// ✅ Fonction qui gère la réception d'un fichier
 void Peer::onBinaryMessageReceived(QByteArray data) {
     if (!file.isOpen()) {
-        file.setFileName("received_file.dat");
-        file.open(QIODevice::WriteOnly);
+        file.setFileName("received_file.dat");  // 📥 Sauvegarde sous ce nom
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) {
+            qDebug() << "❌ Erreur : Impossible de créer le fichier reçu.";
+            return;
+        }
     }
+
     file.write(data);
     qDebug() << "📥 Chunk de fichier reçu (" << data.size() << " octets)";
 }
 
+// ✅ Fonction qui envoie un fichier
 void Peer::sendFile(const QString &filePath) {
-    file.setFileName(filePath);
+    QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "❌ Erreur : Impossible d'ouvrir le fichier";
+        qDebug() << "❌ Erreur : Impossible d'ouvrir le fichier" << filePath;
         return;
     }
 
     qDebug() << "📤 Envoi du fichier en morceaux...";
+
     while (!file.atEnd()) {
         QByteArray chunk = file.read(4096);  // 🔹 Envoi en blocs de 4 Ko
         for (QWebSocket *peer : clients) {
             peer->sendBinaryMessage(chunk);
         }
     }
+
     file.close();
-    qDebug() << "✅ Fichier envoyé !";
+    qDebug() << "✅ Fichier envoyé avec succès !";
 }
 
-void Peer::requestFile(const QString &fileName) {
-    if (clients.isEmpty()) {
-        qDebug() << "⚠ Aucun pair connecté pour demander un fichier.";
-        return;
-    }
-
-    for (QWebSocket *peer : clients) {
-        peer->sendTextMessage("REQUEST_FILE:" + fileName);
-    }
-    qDebug() << "📤 Demande du fichier envoyée aux pairs !";
-}
-
+// ✅ Fonction qui gère la déconnexion d'un pair
 void Peer::onPeerDisconnected() {
     QWebSocket *peer = qobject_cast<QWebSocket *>(sender());
     if (peer) {
