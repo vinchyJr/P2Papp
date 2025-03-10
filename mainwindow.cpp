@@ -2,6 +2,8 @@
 #include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    qDebug() << "interface des salle affiché";
+
     QWidget *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
