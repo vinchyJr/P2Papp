@@ -41,11 +41,11 @@ static constexpr auto qt_meta_stringdata_ZN4PeerE = QtMocHelpers::stringData(
     "fileReceived",
     "",
     "fileName",
+    "data",
     "onNewConnection",
     "onMessageReceived",
     "message",
     "onBinaryMessageReceived",
-    "data",
     "onPeerDisconnected"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
@@ -66,21 +66,21 @@ Q_CONSTINIT static const uint qt_meta_data_ZN4PeerE[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   44,    2, 0x06,    1 /* Public */,
+       1,    2,   44,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,   47,    2, 0x08,    3 /* Private */,
-       5,    1,   48,    2, 0x08,    4 /* Private */,
-       7,    1,   51,    2, 0x08,    6 /* Private */,
-       9,    0,   54,    2, 0x08,    8 /* Private */,
+       5,    0,   49,    2, 0x08,    4 /* Private */,
+       6,    1,   50,    2, 0x08,    5 /* Private */,
+       8,    1,   53,    2, 0x08,    7 /* Private */,
+       9,    0,   56,    2, 0x08,    9 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString, QMetaType::QByteArray,    3,    4,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,    6,
-    QMetaType::Void, QMetaType::QByteArray,    8,
+    QMetaType::Void, QMetaType::QString,    7,
+    QMetaType::Void, QMetaType::QByteArray,    4,
     QMetaType::Void,
 
        0        // eod
@@ -98,6 +98,7 @@ Q_CONSTINIT const QMetaObject Peer::staticMetaObject = { {
         // method 'fileReceived'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
         // method 'onNewConnection'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onMessageReceived'
@@ -117,7 +118,7 @@ void Peer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     auto *_t = static_cast<Peer *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->fileReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 0: _t->fileReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
         case 1: _t->onNewConnection(); break;
         case 2: _t->onMessageReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 3: _t->onBinaryMessageReceived((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1]))); break;
@@ -128,7 +129,7 @@ void Peer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (Peer::*)(QString );
+            using _q_method_type = void (Peer::*)(QString , QByteArray );
             if (_q_method_type _q_method = &Peer::fileReceived; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -169,9 +170,9 @@ int Peer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Peer::fileReceived(QString _t1)
+void Peer::fileReceived(QString _t1, QByteArray _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

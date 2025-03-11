@@ -14,9 +14,9 @@ public:
     void connectToPeer(const QString &ip, quint16 port);
     void sendFile(const QString &filePath);
     void requestFile(const QString &fileName);
-
 signals:
-    void fileReceived(QString fileName);  // ✅ Signal pour informer l'interface qu'un fichier a été reçu
+        void fileReceived(QString fileName, QByteArray data);
+  // ✅ Signal pour informer l'interface qu'un fichier a été reçu
 
 private slots:
     void onNewConnection();

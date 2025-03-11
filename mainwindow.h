@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QTabWidget>
-#include <QListWidget>  // ✅ Ajout pour afficher les fichiers transférés
-#include <QPushButton>  // ✅ Ajout pour le bouton d'envoi de fichier
+#include <QListWidget>
+#include <QPushButton>
 #include "createroom.h"
 #include "joinroom.h"
 #include "peer.h"
@@ -17,16 +17,18 @@ public:
     ~MainWindow();
 
 private slots:
-    void onSendFileClicked();  // 📤 Bouton pour envoyer un fichier
-    void onFileReceived(QString fileName);  // 📥 Ajout d'un fichier reçu à la liste
+    void onSendFileClicked();
+    void onFileReceived(QString fileName, QByteArray data);  // ✅ Nouveau slot pour la réception des fichiers
 
 private:
+    int fileReceivedCount = 0;
     QTabWidget *tabWidget;
     CreateRoom *createRoomPage;
     JoinRoom *joinRoomPage;
     Peer *peer;
+
     QListWidget *fileListWidget;  // ✅ Liste des fichiers envoyés/reçus
-    QPushButton *sendFileButton;  // ✅ Bouton d'envoi de fichier
+    QPushButton *sendFileButton;  // ✅ Bouton pour envoyer des fichiers
 };
 
 #endif // MAINWINDOW_H
