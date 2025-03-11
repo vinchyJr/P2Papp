@@ -14,8 +14,11 @@ Peer::Peer(quint16 port, QObject *parent)
         qDebug() << "✅ Serveur P2P démarré sur le port" << port;
     } else {
         qDebug() << "❌ Erreur : Impossible de démarrer le serveur P2P !";
+        qDebug() << "🔍 Détails de l'erreur : " << server->errorString();
     }
+
 }
+
 
 // ✅ Connexion à un pair via WebSocket
 void Peer::connectToPeer(const QString &ip, quint16 port) {
@@ -61,51 +64,55 @@ void Peer::onMessageReceived(QString message) {
     }
 }
 
-// ✅ Gère la réception d'un fichier
+// ✅ Gère la réception d'un fichier avec demande de confirmation
 void Peer::onBinaryMessageReceived(QByteArray data) {
     static QFile receivedFile;
+    static bool receivingFile = false;
 
-    // 📌 Vérifie si c'est le début du transfert
-    if (!receivedFile.isOpen()) {
-        QString fileName = receivedFileName.isEmpty() ? "received_file.dat" : receivedFileName;
+    if (!receivingFile) {
+        receivingFile = true;
 
-        // 🔹 Demande à l'utilisateur s'il veut accepter le fichier
+        // 🔹 Demande de confirmation à l'utilisateur
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(nullptr, "📥 Réception de fichier",
-                                      "Voulez-vous accepter le fichier '" + fileName + "' ?",
+                                      "Un fichier est en cours de réception. Voulez-vous l'accepter ?",
                                       QMessageBox::Yes | QMessageBox::No);
 
         if (reply == QMessageBox::No) {
-            qDebug() << "❌ Fichier refusé par l'utilisateur.";
+            qDebug() << "❌ L'utilisateur a refusé le fichier.";
+            receivingFile = false;
             return;
         }
 
-        // 🔹 Demande à l'utilisateur où enregistrer le fichier
-        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", fileName);
+        // 🔹 Demande où enregistrer le fichier
+        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", receivedFileName);
         if (savePath.isEmpty()) {
-            qDebug() << "❌ Aucun emplacement choisi pour enregistrer le fichier.";
+            qDebug() << "❌ Aucun emplacement sélectionné. Annulation.";
+            receivingFile = false;
             return;
         }
 
         receivedFile.setFileName(savePath);
         if (!receivedFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "❌ Erreur : Impossible d'ouvrir le fichier pour écriture.";
+            qDebug() << "❌ Impossible d'ouvrir le fichier pour écriture.";
+            receivingFile = false;
             return;
         }
 
-        qDebug() << "📥 Fichier en cours de réception : " << savePath;
+        qDebug() << "📥 Fichier accepté et en cours de réception : " << savePath;
     }
 
-    // 🔹 Écrit le bloc reçu dans le fichier
+    // 🔹 Écrit les données dans le fichier
     receivedFile.write(data);
     qDebug() << "📥 Chunk reçu (" << data.size() << " octets)";
 
-    // 🔹 Ferme le fichier après le dernier chunk
+    // 🔹 Ferme le fichier après la fin du transfert
     if (data.size() < 4096) {
         receivedFile.close();
+        receivingFile = false;
         qDebug() << "✅ Fichier reçu et enregistré : " << receivedFile.fileName();
 
-        // ✅ Émettre le signal pour mettre à jour l'interface
+        // ✅ Informe l'interface graphique qu'un fichier a été reçu
         emit fileReceived(receivedFile.fileName());
     }
 }
