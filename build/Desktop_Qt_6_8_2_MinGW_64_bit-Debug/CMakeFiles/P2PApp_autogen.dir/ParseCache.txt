@@ -1690,6 +1690,6 @@ E:/Ecole/C/P2Papp/peer.h
  mdp:E:/qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h
 E:/Ecole/C/P2Papp/createroom.cpp
 E:/Ecole/C/P2Papp/joinroom.cpp
-E:/Ecole/C/P2Papp/mainwindow.cpp
 E:/Ecole/C/P2Papp/main.cpp
+E:/Ecole/C/P2Papp/mainwindow.cpp
 E:/Ecole/C/P2Papp/peer.cpp
