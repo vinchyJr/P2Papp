@@ -114,7 +114,6 @@ void Peer::sendFile(const QString &filePath) {
         for (QWebSocket *peer : clients) {
             peer->sendBinaryMessage(chunk);
         }
-        qDebug() << chunk;
     }
 
     file.close();
