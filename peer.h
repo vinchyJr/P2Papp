@@ -1,4 +1,4 @@
-#ifndef PEER_H  // Vérifie que le nom est bien UNIQUE
+#ifndef PEER_H
 #define PEER_H
 
 #include <QObject>
@@ -15,6 +15,9 @@ public:
     void sendFile(const QString &filePath);
     void requestFile(const QString &fileName);
 
+signals:
+    void fileReceived(QString fileName);  // ✅ Signal pour informer l'interface qu'un fichier a été reçu
+
 private slots:
     void onNewConnection();
     void onMessageReceived(QString message);
@@ -26,6 +29,7 @@ private:
     QList<QWebSocket *> clients;
     QWebSocket *currentClient;
     QFile file;
+    QString receivedFileName;  // ✅ Stocke le nom du fichier reçu
 };
 
 #endif // PEER_H

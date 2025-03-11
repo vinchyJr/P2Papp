@@ -36,9 +36,9 @@ void Peer::onNewConnection() {
 void Peer::onMessageReceived(QString message) {
     qDebug() << "📩 Message P2P reçu :" << message;
 
-    if (message.startsWith("REQUEST_FILE:")) {
-        QString fileName = message.split(":")[1];
-        sendFile(fileName);
+    if (message.startsWith("FILE_NAME:")) {
+        receivedFileName = message.mid(10);  // 🔹 Stocke le vrai nom du fichier reçu
+        qDebug() << "📌 Nom du fichier reçu :" << receivedFileName;
     }
 }
 
@@ -46,9 +46,9 @@ void Peer::onMessageReceived(QString message) {
 void Peer::onBinaryMessageReceived(QByteArray data) {
     static QFile receivedFile;
 
-    // 📌 Vérifie si c'est le début du transfert
     if (!receivedFile.isOpen()) {
-        QString fileName = "received_file.dat";  // 🔹 Remplace par un vrai nom plus tard
+        // 📌 Vérifie si on a reçu un nom de fichier avant
+        QString fileName = receivedFileName.isEmpty() ? "received_file.dat" : receivedFileName;
 
         // 🔹 Demande à l'utilisateur où enregistrer le fichier
         QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", fileName);
@@ -68,13 +68,19 @@ void Peer::onBinaryMessageReceived(QByteArray data) {
 
     // 🔹 Écrit le bloc reçu dans le fichier
     receivedFile.write(data);
-
     qDebug() << "📥 Chunk reçu (" << data.size() << " octets)";
 
-    // 🔹 Ferme le fichier quand le transfert est terminé (ajoute une condition plus tard)
+    // 🔹 Ferme le fichier après le dernier chunk
+    if (data.size() < 4096) {
+        receivedFile.close();
+        qDebug() << "✅ Fichier reçu et enregistré : " << receivedFile.fileName();
+
+        // ✅ Émettre le signal pour mettre à jour l'interface
+        emit fileReceived(receivedFile.fileName());
+    }
 }
 
-// ✅ Fonction qui envoie un fichier
+// ✅ Fonction qui envoie un fichier (envoie aussi le nom)
 void Peer::sendFile(const QString &filePath) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -82,7 +88,12 @@ void Peer::sendFile(const QString &filePath) {
         return;
     }
 
-    qDebug() << "📤 Envoi du fichier en morceaux...";
+    QString fileName = QFileInfo(filePath).fileName();  // 🔹 Récupère le nom du fichier
+    for (QWebSocket *peer : clients) {
+        peer->sendTextMessage("FILE_NAME:" + fileName);  // 🔹 Envoie le nom du fichier
+    }
+
+    qDebug() << "📤 Envoi du fichier : " << fileName;
 
     while (!file.atEnd()) {
         QByteArray chunk = file.read(4096);  // 🔹 Envoi en blocs de 4 Ko
