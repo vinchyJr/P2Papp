@@ -19,7 +19,6 @@ Peer::Peer(quint16 port, QObject *parent)
 
 }
 
-
 // ✅ Connexion à un pair via WebSocket
 void Peer::connectToPeer(const QString &ip, quint16 port) {
     if (currentClient) {
@@ -66,54 +65,32 @@ void Peer::onMessageReceived(QString message) {
 
 // ✅ Gère la réception d'un fichier avec demande de confirmation
 void Peer::onBinaryMessageReceived(QByteArray data) {
-    static QFile receivedFile;
-    static bool receivingFile = false;
-
-    if (!receivingFile) {
-        receivingFile = true;
-
-        // 🔹 Demande de confirmation à l'utilisateur
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(nullptr, "📥 Réception de fichier",
-                                      "Un fichier est en cours de réception. Voulez-vous l'accepter ?",
-                                      QMessageBox::Yes | QMessageBox::No);
-
-        if (reply == QMessageBox::No) {
-            qDebug() << "❌ L'utilisateur a refusé le fichier.";
-            receivingFile = false;
-            return;
-        }
+    if (!file.isOpen()) {
+        QString fileName = "received_file.dat";  // 🔹 Nom temporaire
 
         // 🔹 Demande où enregistrer le fichier
-        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", receivedFileName);
+        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", fileName);
         if (savePath.isEmpty()) {
-            qDebug() << "❌ Aucun emplacement sélectionné. Annulation.";
-            receivingFile = false;
+            qDebug() << "❌ Aucun emplacement choisi, annulation.";
             return;
         }
 
-        receivedFile.setFileName(savePath);
-        if (!receivedFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "❌ Impossible d'ouvrir le fichier pour écriture.";
-            receivingFile = false;
+        file.setFileName(savePath);
+        if (!file.open(QIODevice::WriteOnly)) {
+            qDebug() << "❌ Erreur : Impossible d'ouvrir le fichier pour écriture.";
             return;
         }
 
-        qDebug() << "📥 Fichier accepté et en cours de réception : " << savePath;
+        qDebug() << "📥 Début du transfert du fichier : " << savePath;
     }
 
-    // 🔹 Écrit les données dans le fichier
-    receivedFile.write(data);
+    file.write(data);
     qDebug() << "📥 Chunk reçu (" << data.size() << " octets)";
 
-    // 🔹 Ferme le fichier après la fin du transfert
-    if (data.size() < 4096) {
-        receivedFile.close();
-        receivingFile = false;
-        qDebug() << "✅ Fichier reçu et enregistré : " << receivedFile.fileName();
-
-        // ✅ Informe l'interface graphique qu'un fichier a été reçu
-        emit fileReceived(receivedFile.fileName());
+    // ✅ Message de confirmation une fois la réception terminée
+    if (file.size() > 0) {  // Vérifie que le fichier contient bien des données
+        qDebug() << "✅ Fichier reçu avec succès ! Enregistré sous :" << file.fileName();
+        file.close();  // Ferme le fichier une fois terminé
     }
 }
 
