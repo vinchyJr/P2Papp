@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), peer(new Peer(777
     // ✅ Connexion du bouton pour l'envoi de fichiers
     connect(sendFileButton, &QPushButton::clicked, this, &MainWindow::onSendFileClicked);
 
-    // ✅ Connexion du signal pour la réception des fichiers
+    // ✅ Connexion du signal pour l'affichage des fichiers reçus
     connect(peer, &Peer::fileReceived, this, &MainWindow::onFileReceived);
 
     setMinimumSize(700, 500);
@@ -53,16 +53,12 @@ void MainWindow::onSendFileClicked() {
 
 // ✅ Gère la réception des fichiers avec confirmation utilisateur
 void MainWindow::onFileReceived(QString fileName, QByteArray data) {
-    qDebug() << "📩 Fichier reçu dans MainWindow ! Nom :" << fileName;
-
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "📥 Réception de fichier",
                                   "Un fichier nommé '" + fileName + "' a été reçu.\nVoulez-vous l'enregistrer ?",
                                   QMessageBox::Yes | QMessageBox::No);
 
     if (reply == QMessageBox::Yes) {
-        qDebug() << "✅ L'utilisateur a accepté de recevoir le fichier.";
-
         // 📂 Demander où enregistrer le fichier
         QString savePath = QFileDialog::getSaveFileName(this, "Enregistrer le fichier", fileName);
         if (!savePath.isEmpty()) {
@@ -71,21 +67,20 @@ void MainWindow::onFileReceived(QString fileName, QByteArray data) {
                 file.write(data);
                 file.close();
 
-                // ✅ Incrémente le compteur et affiche l'info
+                // ✅ Incrémente le compteur
                 fileReceivedCount++;
+
+                // ✅ Ajoute le fichier reçu et affiche le compteur
                 fileListWidget->addItem(QString("📥 Reçu : %1 (%2 fichiers reçus)").arg(savePath).arg(fileReceivedCount));
 
-                qDebug() << "✅ Le fichier a été sauvegardé avec succès sous :" << savePath;
                 QMessageBox::information(this, "✅ Succès",
                                          QString("Le fichier a été enregistré avec succès !\nTotal fichiers reçus : %1").arg(fileReceivedCount));
             } else {
-                qDebug() << "❌ Erreur : Impossible d'enregistrer le fichier.";
                 QMessageBox::critical(this, "❌ Erreur", "Impossible d'enregistrer le fichier !");
             }
-        } else {
-            qDebug() << "❌ L'utilisateur a annulé l'enregistrement du fichier.";
         }
     } else {
-        qDebug() << "❌ L'utilisateur a refusé le fichier.";
+        qDebug() << "❌ L'utilisateur a refusé de sauvegarder le fichier.";
     }
 }
+
