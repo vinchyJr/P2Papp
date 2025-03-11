@@ -15,7 +15,8 @@ public:
     void sendFile(const QString &filePath);
     void requestFile(const QString &fileName);
 signals:
-        void fileReceived(QString fileName, QByteArray data);
+    void fileReceived(QString fileName, QByteArray data);
+
   // ✅ Signal pour informer l'interface qu'un fichier a été reçu
 
 private slots:
@@ -25,6 +26,8 @@ private slots:
     void onPeerDisconnected();
 
 private:
+    qint64 totalBytesReceived = 0;  // ✅ Compteur du nombre total d'octets reçus
+
     QWebSocketServer *server;
     QList<QWebSocket *> clients;
     QWebSocket *currentClient;

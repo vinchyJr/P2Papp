@@ -58,18 +58,22 @@ void Peer::onMessageReceived(QString message) {
     qDebug() << "📩 Message P2P reçu :" << message;
 
     if (message.startsWith("FILE_NAME:")) {
-        receivedFileName = message.mid(10);  // 🔹 Stocke le vrai nom du fichier reçu
-        qDebug() << "📌 Nom du fichier reçu :" << receivedFileName;
+        receivedFileName = message.mid(10).trimmed();  // 🔹 Stocke le vrai nom du fichier reçu et enlève les espaces
+        qDebug() << "📌 Nom du fichier reçu enregistré :" << receivedFileName;
     }
 }
 
 // ✅ Gère la réception d'un fichier avec demande de confirmation
 void Peer::onBinaryMessageReceived(QByteArray data) {
-    if (!file.isOpen()) {
-        QString fileName = "received_file.dat";  // 🔹 Nom temporaire
+    totalBytesReceived += data.size();  // ✅ Incrémente le compteur d'octets reçus
+    qDebug() << "📥 Chunk reçu (" << data.size() << " octets). Total reçu :" << totalBytesReceived << " octets";
 
-        // 🔹 Demande où enregistrer le fichier
-        QString savePath = QFileDialog::getSaveFileName(nullptr, "Enregistrer le fichier", fileName);
+    if (!file.isOpen()) {
+        // ✅ Vérifie si un nom de fichier a été reçu
+        QString fileName = receivedFileName.isEmpty() ? "received_file.dat" : receivedFileName;
+
+        // ✅ Demande à l'utilisateur où enregistrer le fichier
+        QString savePath = QFileDialog::getSaveFileName(nullptr, "📥 Enregistrer le fichier", fileName);
         if (savePath.isEmpty()) {
             qDebug() << "❌ Aucun emplacement choisi, annulation.";
             return;
@@ -85,14 +89,21 @@ void Peer::onBinaryMessageReceived(QByteArray data) {
     }
 
     file.write(data);
-    qDebug() << "📥 Chunk reçu (" << data.size() << " octets)";
+    qDebug() << "📥 Chunk reçu (" << data.size() << " octets) | Total reçu :" << totalBytesReceived << " octets";
 
-    // ✅ Message de confirmation une fois la réception terminée
-    if (file.size() > 0) {  // Vérifie que le fichier contient bien des données
+    // ✅ Fermeture du fichier après la réception complète
+    if (file.size() > 0) {
         qDebug() << "✅ Fichier reçu avec succès ! Enregistré sous :" << file.fileName();
-        file.close();  // Ferme le fichier une fois terminé
+        file.close();
+
+        // ✅ Affichage d'un message de confirmation à l'utilisateur
+        QMessageBox::information(nullptr, "✅ Réception terminée",
+                                 QString("Le fichier '%1' a été reçu avec succès !\nTaille : %2 octets")
+                                     .arg(file.fileName())
+                                     .arg(totalBytesReceived));
     }
 }
+
 
 // ✅ Envoi d'un fichier à un pair
 void Peer::sendFile(const QString &filePath) {
